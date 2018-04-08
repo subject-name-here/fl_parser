@@ -1,4 +1,4 @@
-NAME=parse
+NAME=../expr_parser
 
 CC=g++
 CC_FLAGS=-std=c++11 -Iinclude

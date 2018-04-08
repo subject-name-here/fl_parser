@@ -1,8 +1,10 @@
 #!/bin/bash
 
-filename="../$1"
+filename="$1"
 cd parser
-make > /dev/null 
-./parse $filename
+make > /dev/null
+cd ..
+./expr_parser $filename
+cd parser
 make clean > /dev/null
 cd ..
