@@ -41,7 +41,7 @@ int main(int argc, char* argv[]) {
             t.print();
             std::cout << std::endl;
         } catch (std::string& e) {
-            std::cerr << e;
+            std::cerr << e << "\n";
             is.close();
             return 1;
         }

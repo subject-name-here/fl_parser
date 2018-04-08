@@ -1,2 +1,8 @@
 #!/bin/bash
 
+filename="../$1"
+cd parser
+make > /dev/null 
+./parse $filename
+make clean > /dev/null
+cd ..
