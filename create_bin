@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cd parser
+make > /dev/null
