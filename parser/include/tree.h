@@ -2,7 +2,7 @@
 #define PARSER_TREE_H
 
 #include "token.h"
-
+/*
 struct Tree {
     Tree() {}
 
@@ -51,5 +51,5 @@ struct Tree {
 
     }
 };
-
+*/
 #endif //PARSER_TREE_H

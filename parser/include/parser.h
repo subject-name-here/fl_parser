@@ -3,7 +3,7 @@
 
 #include <vector>
 #include "token.h"
-
+/*
 class Parser {
     struct Result {
         Result(Tree t, int rest) : t(t), rest(rest) {};
@@ -137,6 +137,6 @@ public:
     }
 
 
-};
+};*/
 
 #endif //PARSER_PARSER_H

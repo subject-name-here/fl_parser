@@ -1,130 +1,167 @@
 #ifndef PARSER_TOKEN_H
 #define PARSER_TOKEN_H
 
+#include <string>
+
 class Token {
+protected:
+    int line;
+    int begin;
+    int fin;
 public:
+    Token(int line, int begin, int fin) : line(line), begin(begin), fin(fin) {}
+
     virtual std::string get_type() {
         return "Token";
     }
 
-    virtual int get_pos() {
-        return pos;
+    virtual int get_line() {
+        return line;
     }
 
-protected:
-    int pos = -15;
+    virtual int get_start_pos() {
+        return begin;
+    }
+
+    virtual int get_end_pos() {
+        return fin;
+    }
+
+    virtual void print() {
+        std::cout << "Token(" << line << ", " << begin << ", " << fin << ")";
+    }
 };
 
-class NumToken : public Token {
+
+class Ident : public Token {
+private:
+    std::string name;
 public:
-    NumToken(int num, int pos) : num(num), pos(pos) {}
+    Ident(int line, int begin, int fin, std::string& lexeme) : Token(line, begin, fin),
+                                                               name(lexeme) {}
 
     virtual std::string get_type() {
-        return "NumToken";
+        return "Ident";
     }
 
-    int get_num() {
-        return num;
+    std::string get_ident() {
+        return name;
     }
 
-    virtual int get_pos() {
-        return pos;
+    virtual void print() {
+        std::cout << "IDENT(\"" << name << "\", " << line << ", " << begin << ", " << fin << ")";
     }
-
-private:
-    int num;
-    int pos;
 };
 
-class OpenBracketToken : public Token {
+class KeyWord : public Token {
+private:
+    std::string word;
+
 public:
-    explicit OpenBracketToken(int pos) : pos(pos) {};
+    KeyWord(int line, int begin, int fin, std::string& lexeme) : Token(line, begin, fin),
+                                                                word(lexeme) {}
 
     virtual std::string get_type() {
-        return "OpenBracketToken";
+        return "KeyWord";
     }
 
-    virtual int get_pos() {
-        return pos;
+    std::string get_word() {
+        return word;
     }
 
-private:
-    int pos;
+    virtual void print() {
+        std::cout << "KW_" << word << "(" << line << ", " << begin << ", " << fin << ")";
+    }
 };
 
-class CloseBracketToken : public Token {
+class Num : public Token {
+private:
+    double value;
+
 public:
-    explicit CloseBracketToken(int pos) : pos(pos) {};
+    Num(int line, int begin, int fin, std::string& lexeme) : Token(line, begin, fin) {
+        if (lexeme[0] == '.') {
+            value = std::stod("0" + lexeme);
+        } else {
+            value = std::stod(lexeme);
+        }
+    }
 
     virtual std::string get_type() {
-        return "CloseBracketToken";
+        return "Num";
     }
 
-    virtual int get_pos() {
-        return pos;
+    double get_value() {
+        return value;
     }
 
-private:
-    int pos;
+    virtual void print() {
+        std::cout << "NUM(" << value << ", " << line << ", " << begin << ", " << fin << ")";
+    }
 };
 
-class PowerToken : public Token {
+
+class Bool : public Token {
+private:
+    std::string lit;
+
 public:
-    explicit PowerToken(int pos) : pos(pos) {};
+    Bool(int line, int begin, int fin, std::string& lexeme) : Token(line, begin, fin),
+                                                             lit(lexeme) {}
 
     virtual std::string get_type() {
-        return "PowerToken";
+        return "Bool";
     }
 
-    virtual int get_pos() {
-        return pos;
+    std::string get_lit() {
+        return lit;
     }
 
-
-private:
-    int pos;
+    virtual void print() {
+        std::cout << "BOOL(" << lit << ", " << line << ", " << begin << ", " << fin << ")";
+    }
 };
 
-class MulDivToken : public Token {
+class Operator : public Token {
+private:
+    std::string op;
+
 public:
-    MulDivToken(char symb, int pos) : symb(symb), pos(pos) {}
+    Operator(int line, int begin, int fin, std::string& lexeme) : Token(line, begin, fin),
+                                                                 op(lexeme) {}
 
     virtual std::string get_type() {
-        return "MulDivToken";
+        return "Operator";
     }
 
-    char get_symb() {
-        return symb;
+    std::string get_op() {
+        return op;
     }
 
-    virtual int get_pos() {
-        return pos;
+    virtual void print() {
+        std::cout << "OPERATOR(\"" << op << "\", " << line << ", " << begin << ", " << fin << ")";
     }
-
-private:
-    char symb;
-    int pos;
 };
 
-class PlusMinusToken : public Token {
+class Separator : public Token {
+private:
+    std::string sep;
+
 public:
-    PlusMinusToken(char symb, int pos) : symb(symb), pos(pos) {}
+    Separator(int line, int begin, int fin, std::string& lexeme) : Token(line, begin, fin),
+                                                                  sep(lexeme) {}
 
     virtual std::string get_type() {
-        return "PlusMinusToken";
+        return "Separator";
     }
 
-    char get_symb() {
-        return symb;
+    std::string get_sep() {
+        return sep;
     }
 
-    virtual int get_pos() {
-        return pos;
+    virtual void print() {
+        std::cout << "SEPARATOR(\"" << sep << "\", " << line << ", " << begin << ", " << fin << ")";
     }
-
-private:
-    char symb;
-    int pos;
 };
 
 #endif //PARSER_TOKEN_H
