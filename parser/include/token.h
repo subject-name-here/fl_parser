@@ -2,6 +2,7 @@
 #define PARSER_TOKEN_H
 
 #include <string>
+#include <cmath>
 
 class Token {
 protected:
@@ -80,10 +81,14 @@ private:
 
 public:
     Num(int line, int begin, int fin, std::string& lexeme) : Token(line, begin, fin) {
-        if (lexeme[0] == '.') {
-            value = std::stod("0" + lexeme);
-        } else {
-            value = std::stod(lexeme);
+        try {
+            if (lexeme[0] == '.') {
+                value = std::stod("0" + lexeme);
+            } else {
+                value = std::stod(lexeme);
+            }
+        } catch (const std::out_of_range& oor) {
+            value = INFINITY;
         }
     }
 

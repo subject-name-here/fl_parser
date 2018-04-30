@@ -15,6 +15,7 @@ public:
         int cnt = 0;
 
         while (cnt < s.length()) {
+            std::cerr << line << " " << symb << "\n";
             int d;
 
             if (s[cnt] == '_') {

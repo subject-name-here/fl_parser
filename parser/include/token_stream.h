@@ -11,11 +11,18 @@ public:
     }
 
     void print() {
+        if (tokens.size() == 0) {
+            std::cout << std::endl;
+            return;
+        }
+
         for (int i = 0; i < tokens.size() - 1; i++) {
             tokens[i].get()->print();
             std::cout << ", ";
         }
-        tokens[tokens.size() - 1].get()->print();
+        if (tokens.size() > 0) {
+            tokens[tokens.size() - 1].get()->print();
+        }
 
         std::cout << std::endl;
     }

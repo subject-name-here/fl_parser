@@ -244,7 +244,6 @@ int main(int argc, char* argv[]) {
 
             TokenStream tokens = Lexer::tokenify(code);
             tokens.print();
-
         } catch (std::string& e) {
             std::cerr << e << "\n";
             is.close();
