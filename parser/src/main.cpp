@@ -219,14 +219,14 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    std::string s = argv[1];
-    if (s == "test") {
+    std::string filename = argv[1];
+    if (filename == "test") {
         test_all();
     } else {
         std::ifstream is;
         std::string str;
 
-        is.open(s);
+        is.open(filename);
 
         if (is.fail()) {
             std::cerr << "File not found.\n";
@@ -244,6 +244,7 @@ int main(int argc, char* argv[]) {
 
             TokenStream tokens = Lexer::tokenify(code);
             tokens.print();
+            //Parser.parse(tokens);
         } catch (std::string& e) {
             std::cerr << e << "\n";
             is.close();

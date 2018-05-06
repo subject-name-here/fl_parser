@@ -15,14 +15,14 @@ public:
         int cnt = 0;
 
         while (cnt < s.length()) {
-            std::cerr << line << " " << symb << "\n";
             int d;
 
-            if (s[cnt] == '_') {
+            if (s[cnt] == '_') {  // Hmmm, it starts with underscore. Then it's ident!
                 d = find_ident(s, cnt);
                 std::string lexeme = s.substr(cnt, d);
                 tokens.add(new Ident(line, symb, symb + d - 1, lexeme));
             } else if (s[cnt] >= 'a' && s[cnt] <= 'z') {
+                // It starts with letter... Bool? Maybe keyword? If not, then it's ident!
                 d = find_bool(s, cnt);
                 if (d == -1)  {
                     d = find_keyword(s, cnt);
@@ -39,6 +39,7 @@ public:
                     tokens.add(new Bool(line, symb, symb + d - 1, lexeme));
                 }
             } else if (s[cnt] == '.' || s[cnt] >= '0' && s[cnt] <= '9') {
+                // It starts with number? It's num! Also, it's num when it starts with point.
                 d = find_num(s, cnt);
                 if (d == -1) {
                     std::string e = "Exception: unrecognized numeric literal at line ";
@@ -53,8 +54,10 @@ public:
                 tokens.add(new Num(line, symb, symb + d - 1, lexeme));
 
             } else if (s[cnt] == 32 || s[cnt] == 9 || s[cnt] == 12) {
+                // It's space.
                 d = 1;
             } else if (s[cnt] == 10 || s[cnt] == 13) {
+                // It's breakline.
                 d = 1;
                 if (cnt + 1 < s.length() && s[cnt] == 10 && s[cnt + 1] == 13) {
                     d++;
@@ -62,6 +65,7 @@ public:
                 line++;
                 symb = -d;
             } else {
+                // It's something strange... Separator? Operator? If not, then it's something unknown.
                 d = find_separator(s, cnt);
                 if (d != -1) {
                     std::string lexeme = s.substr(cnt, d);
@@ -88,6 +92,7 @@ public:
     }
 
     static int find_ident(std::string& s, int pos) {
+        // Let's take all than can be taken.
         if (s[pos] != '_' && (s[pos] < 'a' || s[pos] > 'z')) {
             return -1;
         }
@@ -111,7 +116,7 @@ public:
 
         if (pos + 4 <= s.length()) {
             std::string w =  s.substr(pos, 4);
-            if (w == "then" || w == "else" || w == "read") {
+            if (w == "then" || w == "else" || w == "read" || w == "pass") {
                 return 4;
             }
         }

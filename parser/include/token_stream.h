@@ -20,9 +20,7 @@ public:
             tokens[i].get()->print();
             std::cout << ", ";
         }
-        if (tokens.size() > 0) {
-            tokens[tokens.size() - 1].get()->print();
-        }
+        tokens[tokens.size() - 1].get()->print();
 
         std::cout << std::endl;
     }

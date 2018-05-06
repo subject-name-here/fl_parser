@@ -3,8 +3,10 @@
 
 #include <vector>
 #include "token.h"
+#include "token_stream.h"
 /*
 class Parser {
+private:
     struct Result {
         Result(Tree t, int rest) : t(t), rest(rest) {};
 
@@ -12,7 +14,7 @@ class Parser {
         int rest;
     };
 public:
-    static Tree parse(std::vector<std::shared_ptr<Token>>& tokens) {
+    static Tree parse(TokenStream& tokens) {
         Result r = parsePlusMinus(tokens, 0);
         if (r.rest < tokens.size()) {
             std::string err = "Failed to parse: can't parse the whole expression, error at position ";

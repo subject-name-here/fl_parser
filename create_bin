@@ -1,4 +1,4 @@
 #!/bin/bash
 
 cd parser
-make > /dev/null
+make #> /dev/null
