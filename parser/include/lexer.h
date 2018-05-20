@@ -15,77 +15,67 @@ public:
         int cnt = 0;
 
         while (cnt < s.length()) {
-            int d;
-
-            if (s[cnt] == '_') {  // Hmmm, it starts with underscore. Then it's ident!
-                d = find_ident(s, cnt);
-                std::string lexeme = s.substr(cnt, d);
-                tokens.add(new Ident(line, symb, symb + d - 1, lexeme));
-            } else if (s[cnt] >= 'a' && s[cnt] <= 'z') {
-                // It starts with letter... Bool? Maybe keyword? If not, then it's ident!
-                d = find_bool(s, cnt);
-                if (d == -1)  {
-                    d = find_keyword(s, cnt);
-                    if (d == -1) {
-                        d = find_ident(s, cnt);
-                        std::string lexeme = s.substr(cnt, d);
-                        tokens.add(new Ident(line, symb, symb + d - 1, lexeme));
-                    } else {
-                        std::string lexeme = s.substr(cnt, d);
-                        tokens.add(new KeyWord(line, symb, symb + d - 1, lexeme));
-                    }
-                } else {
-                    std::string lexeme = s.substr(cnt, d);
-                    tokens.add(new Bool(line, symb, symb + d - 1, lexeme));
-                }
-            } else if (s[cnt] == '.' || s[cnt] >= '0' && s[cnt] <= '9') {
-                // It starts with number? It's num! Also, it's num when it starts with point.
-                d = find_num(s, cnt);
-                if (d == -1) {
-                    std::string e = "Exception: unrecognized numeric literal at line ";
-                    e.append(std::to_string(line));
-                    e.append(", position ");
-                    e.append(std::to_string(symb));
-                    e.append(".");
-                    throw e;
-                }
-
-                std::string lexeme = s.substr(cnt, d);
-                tokens.add(new Num(line, symb, symb + d - 1, lexeme));
-
-            } else if (s[cnt] == 32 || s[cnt] == 9 || s[cnt] == 12) {
+            if (s[cnt] == 32 || s[cnt] == 9 || s[cnt] == 12) {
                 // It's space.
-                d = 1;
+                cnt++;
+                symb++;
+                continue;
             } else if (s[cnt] == 10 || s[cnt] == 13) {
                 // It's breakline.
-                d = 1;
+                cnt++;
                 if (cnt + 1 < s.length() && s[cnt] == 10 && s[cnt + 1] == 13) {
-                    d++;
+                    cnt++;
                 }
+
                 line++;
-                symb = -d;
-            } else {
-                // It's something strange... Separator? Operator? If not, then it's something unknown.
-                d = find_separator(s, cnt);
-                if (d != -1) {
-                    std::string lexeme = s.substr(cnt, d);
-                    tokens.add(new Separator(line, symb, symb + d - 1, lexeme));
-                } else {
-                    d = find_operator(s, cnt);
-                    if (d == -1) {
-                        std::string e = "Exception: unknown lexeme at line ";
-                        e.append(std::to_string(line));
-                        e.append(", position ");
-                        e.append(std::to_string(symb));
-                        e.append(".");
-                        throw e;
-                    }
-                    std::string lexeme = s.substr(cnt, d);
-                    tokens.add(new Operator(line, symb, symb + d - 1, lexeme));
-                }
+                symb = 0;
+                continue;
             }
-            cnt += d;
-            symb += d;
+
+            int d1 = find_keyword(s, cnt);
+            int d2 = find_bool(s, cnt);
+            int d3 = find_ident(s, cnt);
+            int d4 = find_num(s, cnt);
+            int d5 = find_operator(s, cnt);
+            int d6 = find_separator(s, cnt);
+            int d7 = find_unknown(s, cnt);
+
+            if (d1 != -1) {
+                std::string lexeme = s.substr(cnt, d1);
+                tokens.add(new Keyword(line, symb, symb + d1 - 1, lexeme));
+                symb += d1;
+                cnt += d1;
+            } else if (d2 != -1) {
+                std::string lexeme = s.substr(cnt, d2);
+                tokens.add(new Bool(line, symb, symb + d2 - 1, lexeme));
+                symb += d2;
+                cnt += d2;
+            } else if (d3 != -1) {
+                std::string lexeme = s.substr(cnt, d3);
+                tokens.add(new Ident(line, symb, symb + d3 - 1, lexeme));
+                symb += d3;
+                cnt += d3;
+            } else if (d4 != -1) {
+                std::string lexeme = s.substr(cnt, d4);
+                tokens.add(new Num(line, symb, symb + d4 - 1, lexeme));
+                symb += d4;
+                cnt += d4;
+            } else if (d5 != -1) {
+                std::string lexeme = s.substr(cnt, d5);
+                tokens.add(new Operator(line, symb, symb + d5 - 1, lexeme));
+                symb += d5;
+                cnt += d5;
+            } else if (d6 != -1) {
+                std::string lexeme = s.substr(cnt, d6);
+                tokens.add(new Separator(line, symb, symb + d6 - 1, lexeme));
+                symb += d6;
+                cnt += d6;
+            } else {
+                std::string lexeme = s.substr(cnt, d7);
+                tokens.add(new Unknown(line, symb, symb + d7 - 1, lexeme));
+                symb += d7;
+                cnt += d7;
+            }
         }
 
         return tokens;
@@ -114,17 +104,31 @@ public:
             }
         }
 
+        if (pos + 3 <= s.length()) {
+            std::string w =  s.substr(pos, 3);
+            if (w == "end") {
+                return 3;
+            }
+        }
+
         if (pos + 4 <= s.length()) {
             std::string w =  s.substr(pos, 4);
-            if (w == "then" || w == "else" || w == "read" || w == "pass") {
+            if (w == "then" || w == "else" || w == "read") {
                 return 4;
             }
         }
 
         if (pos + 5 <= s.length()) {
             std::string w =  s.substr(pos, 5);
-            if (w == "while" || w == "write") {
+            if (w == "while" || w == "write" || w == "begin") {
                 return 5;
+            }
+        }
+
+        if (pos + 6 <= s.length()) {
+            std::string w =  s.substr(pos, 6);
+            if (w == "return") {
+                return 6;
             }
         }
 
@@ -222,7 +226,25 @@ public:
         if (s[pos] == '(' || s[pos] == ')' || s[pos] == ';' || s[pos] == ',') {
             return 1;
         }
+
+        if (pos + 1 < s.length() && s[pos] == ':' && s[pos + 1] == '=') {
+            return 2;
+        }
+
         return -1;
+    }
+
+    static bool not_good_symbol(char i) {
+        return !(i == '(' || i == ')' || i == ';' || i == ',' || i == 9 || i == 10 || i == 12 || i == 13 || i == 32);
+    }
+
+    static int find_unknown(std::string& s, int pos) {
+        int l = 0;
+        while (pos + l < s.length() && not_good_symbol(s[pos + l])) {
+            l++;
+        }
+
+        return l;
     }
 };
 

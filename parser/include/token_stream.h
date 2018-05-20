@@ -10,6 +10,14 @@ public:
         tokens.emplace_back(t);
     }
 
+    std::shared_ptr<Token> get(int i) {
+        return tokens[i];
+    }
+
+    int size() {
+        return tokens.size();
+    }
+
     void print() {
         if (tokens.size() == 0) {
             std::cout << std::endl;

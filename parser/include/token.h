@@ -54,16 +54,16 @@ public:
     }
 };
 
-class KeyWord : public Token {
+class Keyword : public Token {
 private:
     std::string word;
 
 public:
-    KeyWord(int line, int begin, int fin, std::string& lexeme) : Token(line, begin, fin),
+    Keyword(int line, int begin, int fin, std::string& lexeme) : Token(line, begin, fin),
                                                                 word(lexeme) {}
 
     virtual std::string get_type() {
-        return "KeyWord";
+        return "Keyword";
     }
 
     std::string get_word() {
@@ -166,6 +166,28 @@ public:
 
     virtual void print() {
         std::cout << "SEPARATOR(\"" << sep << "\", " << line << ", " << begin << ", " << fin << ")";
+    }
+};
+
+
+class Unknown : public Token {
+private:
+    std::string lexeme;
+
+public:
+    Unknown(int line, int begin, int fin, std::string& lexeme) : Token(line, begin, fin),
+                                                                   lexeme(lexeme) {}
+
+    virtual std::string get_type() {
+        return "Separator";
+    }
+
+    std::string get_lexeme() {
+        return lexeme;
+    }
+
+    virtual void print() {
+        std::cout << "Unknown(\"" << lexeme << "\", " << line << ", " << begin << ", " << fin << ")";
     }
 };
 

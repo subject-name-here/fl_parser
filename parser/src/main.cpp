@@ -7,9 +7,12 @@
 #include "lexer.h"
 #include "token.h"
 #include "token_stream.h"
+#include "parser.h"
 
 std::stringstream buffer;
 char result[1024];
+
+void print(Node *pNode, std::string basic_string);
 
 bool test1() {
     std::string t1 = "ident1 ident2 __ ident4 xxx_coolident666_xxx";
@@ -213,6 +216,17 @@ void test_all() {
 }
 
 
+void print(Node *n, std::string filename) {
+    std::ofstream os;
+    os.open(filename + ".gv");
+
+    os << "digraph program {" << "\n";
+        n->print(os, 0);
+
+    os << "}";
+    os.close();
+}
+
 int main(int argc, char* argv[]) {
     if (argc != 2) {
         std::cerr << "Error: wrong number of arguments.\n";
@@ -243,8 +257,10 @@ int main(int argc, char* argv[]) {
             }
 
             TokenStream tokens = Lexer::tokenify(code);
-            tokens.print();
-            //Parser.parse(tokens);
+            //tokens.print();
+            Node* n = Parser::parse_program(tokens);
+
+            print(n, filename);
         } catch (std::string& e) {
             std::cerr << e << "\n";
             is.close();
@@ -255,3 +271,4 @@ int main(int argc, char* argv[]) {
 
     return 0;
 }
+
