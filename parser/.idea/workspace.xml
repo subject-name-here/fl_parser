@@ -26,8 +26,8 @@
       <file leaf-file-name="main.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-42">
-              <caret line="258" selection-start-line="258" selection-end-line="258" />
+            <state relative-caret-position="3390">
+              <caret line="259" column="14" selection-start-line="259" selection-start-column="14" selection-end-line="259" selection-end-column="14" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -35,11 +35,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="parser.h" pinned="false" current-in-tab="false">
+      <file leaf-file-name="parser.h" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/include/parser.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="123">
-              <caret line="714" column="26" selection-start-line="714" selection-start-column="26" selection-end-line="714" selection-end-column="26" />
+            <state relative-caret-position="120">
+              <caret line="8" column="43" selection-start-line="8" selection-start-column="43" selection-end-line="8" selection-end-column="43" />
               <folding>
                 <element signature="e#49#66#0" expanded="true" />
               </folding>
@@ -51,16 +51,7 @@
         <entry file="file://$PROJECT_DIR$/include/lexer.h">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="130">
-              <caret line="81" selection-start-line="81" selection-end-line="81" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="token.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/include/token.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-660">
-              <caret line="6" selection-start-line="6" selection-end-line="6" />
+              <caret line="98" column="54" selection-start-line="98" selection-start-column="54" selection-end-line="98" selection-end-column="54" />
             </state>
           </provider>
         </entry>
@@ -68,8 +59,8 @@
       <file leaf-file-name="expr" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/expr">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" column="3" selection-start-line="9" selection-start-column="3" selection-end-line="9" selection-end-column="3" />
+            <state relative-caret-position="120">
+              <caret line="8" column="3" lean-forward="true" selection-start-line="8" selection-start-column="3" selection-end-line="8" selection-end-column="3" />
             </state>
           </provider>
         </entry>
@@ -77,20 +68,11 @@
       <file leaf-file-name="tree.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/include/tree.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
-              <caret line="32" column="108" lean-forward="true" selection-start-line="32" selection-start-column="108" selection-end-line="32" selection-end-column="108" />
+            <state relative-caret-position="115">
+              <caret line="37" selection-start-line="37" selection-end-line="37" />
               <folding>
                 <element signature="e#45#63#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="expr.gv" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/expr.gv">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="60" column="60" selection-end-line="112" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -103,6 +85,7 @@
       <find>empty</find>
       <find>30</find>
       <find>emplace_back(</find>
+      <find>fall</find>
     </findStrings>
     <replaceStrings>
       <replace>emplace_back(&amp;</replace>
@@ -116,9 +99,9 @@
         <option value="$PROJECT_DIR$/include/token.h" />
         <option value="$PROJECT_DIR$/include/token_stream.h" />
         <option value="$PROJECT_DIR$/include/expr_parser.h" />
-        <option value="$PROJECT_DIR$/include/lexer.h" />
         <option value="$PROJECT_DIR$/src/main.cpp" />
         <option value="$PROJECT_DIR$/include/tree.h" />
+        <option value="$PROJECT_DIR$/include/lexer.h" />
         <option value="$PROJECT_DIR$/expr" />
         <option value="$PROJECT_DIR$/include/parser.h" />
       </list>
@@ -149,6 +132,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -170,7 +154,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -227,27 +210,28 @@
       <workItem from="1526669539190" duration="11487000" />
       <workItem from="1526737994726" duration="11168000" />
       <workItem from="1526765084841" duration="2187000" />
-      <workItem from="1526770118564" duration="21479000" />
+      <workItem from="1526770118564" duration="22218000" />
+      <workItem from="1527014426652" duration="9491000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="104622000" />
+    <option name="totallyTimeSpent" value="114852000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="52" y="-11" width="1309" height="676" extended-state="6" />
+    <frame x="53" y="-4" width="1307" height="772" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24713084" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Messages" order="7" weight="0.38790035" />
+      <window_info anchor="bottom" id="Messages" order="7" weight="0.3873874" />
       <window_info anchor="bottom" id="CMake" order="10" />
       <window_info anchor="right" id="LuaJ" order="3" />
       <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5003814" side_tool="true" weight="0.32732734" />
       <window_info anchor="bottom" id="Version Control" order="9" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.38967973" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3888889" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.49961862" weight="0.32732734" />
+      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.49961862" weight="0.32562277" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3993994" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -267,19 +251,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/src/main.cpp</url>
-          <line>258</line>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/include/parser.h</url>
-          <line>547</line>
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-      </breakpoints>
-      <option name="time" value="15" />
+      <option name="time" value="21" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -527,13 +499,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/include/expr_parser.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" selection-start-line="4" selection-end-line="4" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/include/expr_parser.h" />
     <entry file="file:///usr/include/c++/5/ext/atomicity.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="123">
@@ -548,16 +514,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/include/tree.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="32" column="108" lean-forward="true" selection-start-line="32" selection-start-column="108" selection-end-line="32" selection-end-column="108" />
-          <folding>
-            <element signature="e#45#63#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/include/c++/5/bits/shared_ptr.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="125">
@@ -565,51 +521,61 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/include/lexer.h">
+    <entry file="file://$PROJECT_DIR$/expr.gv">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="130">
-          <caret line="81" selection-start-line="81" selection-end-line="81" />
+        <state relative-caret-position="120">
+          <caret line="8" column="21" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/include/token.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-660">
-          <caret line="6" selection-start-line="6" selection-end-line="6" />
+        <state relative-caret-position="970">
+          <caret line="150" selection-start-line="150" selection-end-line="150" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/lexer.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="98" column="54" selection-start-line="98" selection-start-column="54" selection-end-line="98" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/tree.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="37" selection-start-line="37" selection-end-line="37" />
+          <folding>
+            <element signature="e#45#63#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-42">
-          <caret line="258" selection-start-line="258" selection-end-line="258" />
+        <state relative-caret-position="3390">
+          <caret line="259" column="14" selection-start-line="259" selection-start-column="14" selection-end-line="259" selection-end-column="14" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/expr">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="3" lean-forward="true" selection-start-line="8" selection-start-column="3" selection-end-line="8" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/include/parser.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="123">
-          <caret line="714" column="26" selection-start-line="714" selection-start-column="26" selection-end-line="714" selection-end-column="26" />
+        <state relative-caret-position="120">
+          <caret line="8" column="43" selection-start-line="8" selection-start-column="43" selection-end-line="8" selection-end-column="43" />
           <folding>
             <element signature="e#49#66#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/expr">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="3" selection-start-line="9" selection-start-column="3" selection-end-line="9" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/expr.gv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="60" column="60" selection-end-line="112" selection-end-column="1" />
         </state>
       </provider>
     </entry>

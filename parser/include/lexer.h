@@ -97,9 +97,16 @@ public:
     }
 
     static int find_keyword(std::string& s, int pos) {
+        if (pos + 6 <= s.length()) {
+            std::string w =  s.substr(pos, 6);
+            if (w == "return" || w == "assert" || w == "if_not") {
+                return 6;
+            }
+        }
+
         if (pos + 2 <= s.length()) {
             std::string w =  s.substr(pos, 2);
-            if (w == "if" || w == "do") {
+            if (w == "if" || w == "do" || w == "ex") {
                 return 2;
             }
         }
@@ -113,7 +120,7 @@ public:
 
         if (pos + 4 <= s.length()) {
             std::string w =  s.substr(pos, 4);
-            if (w == "then" || w == "else" || w == "read") {
+            if (w == "then" || w == "else" || w == "read" || w == "pass" || w == "fall") {
                 return 4;
             }
         }
@@ -122,13 +129,6 @@ public:
             std::string w =  s.substr(pos, 5);
             if (w == "while" || w == "write" || w == "begin") {
                 return 5;
-            }
-        }
-
-        if (pos + 6 <= s.length()) {
-            std::string w =  s.substr(pos, 6);
-            if (w == "return") {
-                return 6;
             }
         }
 
@@ -193,6 +193,11 @@ public:
 
         if (pos + 5 <= s.length() && s.substr(pos, 5) == "false") {
             return 5;
+        }
+
+        // Sugar!
+        if (pos + 4 <= s.length() && s.substr(pos, 4) == "fail") {
+            return 4;
         }
 
         return -1;

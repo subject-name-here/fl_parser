@@ -218,7 +218,7 @@ void test_all() {
 
 void print(Node *n, std::string filename) {
     std::ofstream os;
-    os.open(filename + ".gv");
+    os.open("../" + filename + ".gv");
 
     os << "digraph program {" << "\n";
         n->print(os, 0);

@@ -6,6 +6,8 @@
 #include "tree.h"
 #include "token_stream.h"
 
+// #мне_очень_стыдно_за_качество_этого_кода
+
 typedef struct Result {
     Result(Node t, int rest) : rest(rest) { node = std::make_shared<Node>(t); };
 
@@ -87,6 +89,18 @@ public:
             if (token.get_word() == "begin") {
                 body.begin = tokens.get(new_pos);
                 new_pos++;
+            } else if (token.get_word() == "pass") {
+                body.fin = tokens.get(new_pos);
+                return Result(body, new_pos + 1);
+            } else if (token.get_word() == "ex") {
+                new_pos++;
+                Result r = parse_statement(tokens, new_pos);
+                body.sons.push_back(r.node);
+
+                new_pos = r.rest;
+                body.begin = tokens.get(new_pos - 1);
+                body.fin = tokens.get(new_pos - 1);
+                return Result(body, new_pos);
             } else {
                 // ERROR!
                 throw 1;
@@ -97,7 +111,7 @@ public:
         }
 
         Result r = parse_statements(tokens, new_pos);
-        body.sons.push_back(r.node);
+        body.sons = r.node->sons;
         new_pos = r.rest;
 
         if (tokens.get(new_pos)->get_type() == "Keyword") {
@@ -303,8 +317,23 @@ public:
                 }
             } else if (word == "while") {
                 return parse_while(tokens, new_pos);
-            } else if (word == "if") {
+            } else if (word == "if" || word == "if_not") {
                 return parse_if(tokens, new_pos);
+            } else if (word == "fall") {
+                Node n1(std::make_shared<Token>(token), "Num 1");
+                n1.is_atom = true;
+                Node n2(std::make_shared<Token>(token), "Divide");
+                Node n3(std::make_shared<Token>(token), "Num 0");
+                n3.is_atom = true;
+
+                n2.sons.push_back(std::make_shared<Node>(n1));
+                n2.sons.push_back(std::make_shared<Node>(n3));
+
+                statement.name = "Write Statement";
+                statement.sons.push_back(std::make_shared<Node>(n2));
+                statement.fin = tokens.get(new_pos);
+
+                new_pos++;
             } else {
                 return Result(Node("Empty"), pos);
             }
@@ -468,8 +497,13 @@ public:
         Node statement("If statement");
         statement.begin = tokens.get(pos);
 
+        bool is_reversed = false;
         if (tokens.get(new_pos)->get_type() == "Keyword" &&
             (*dynamic_cast<Keyword*>(tokens.get(new_pos).get())).get_word() == "if") {
+            new_pos++;
+        } else if (tokens.get(new_pos)->get_type() == "Keyword" &&
+                   (*dynamic_cast<Keyword*>(tokens.get(new_pos).get())).get_word() == "if_not") {
+            is_reversed = true;
             new_pos++;
         } else {
             // ERROR!
@@ -526,6 +560,12 @@ public:
         statement.sons.push_back(r3.node);
         new_pos = r3.rest;
 
+        if (is_reversed) {
+            std::swap(statement.sons[1], statement.sons[2]);
+            statement.sons[1]->name = "Then-body";
+            statement.sons[2]->name = "Else-body";
+        }
+
         statement.fin = tokens.get(new_pos - 1);
         return Result(statement, new_pos);
     }
@@ -541,7 +581,6 @@ public:
         Result r = parse_and(tokens, pos);
         Node n = r.node.get();
         int new_pos = r.rest;
-
 
         if (new_pos < tokens.size() && tokens.get(new_pos).get()->get_type() == "Operator" &&
             (*dynamic_cast<Operator*>(tokens.get(new_pos).get())).get_op() == "||") {
@@ -654,6 +693,7 @@ public:
 
         return Result(n, new_pos);
     }
+
     static Result parse_mul_div(TokenStream& tokens, int pos) {
         Result r = parse_brackets(tokens, pos);
         Node n = r.node.get();
@@ -712,10 +752,7 @@ public:
             throw 1;
         }
 
-        Node n(tokens.get(pos), tokens.get(new_pos - 1), "Brackets expression");
-        n.sons.push_back(r.node);
-
-        return Result(n, new_pos);
+        return Result(*r.node.get(), new_pos);
     }
 
     static Result parse_num(TokenStream& tokens, int pos) {
@@ -739,6 +776,19 @@ public:
     static Result parse_bool(TokenStream& tokens, int pos) {
         if (tokens.get(pos)->get_type() == "Bool") {
             Bool token = *dynamic_cast<Bool*>(tokens.get(pos).get());
+            if (token.get_lit() == "fail") {
+                Node n1(std::make_shared<Token>(token), "Num 1");
+                n1.is_atom = true;
+                Node n2(std::make_shared<Token>(token), "Divide");
+                Node n3(std::make_shared<Token>(token), "Num 0");
+                n3.is_atom = true;
+
+                n2.sons.push_back(std::make_shared<Node>(n1));
+                n2.sons.push_back(std::make_shared<Node>(n3));
+
+                return Result(n2, pos + 1);
+            }
+
             Node n(tokens.get(pos), "Bool " + token.get_lit());
             n.is_atom = true;
             return Result(n, pos + 1);
