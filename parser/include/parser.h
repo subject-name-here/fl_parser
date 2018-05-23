@@ -50,7 +50,9 @@ public:
                 funcs.fin = tokens.get(new_pos);
                 new_pos++;
             } else {
+
                 // ERROR!
+                std::cerr << "Expected ; on " << tokens.get(new_pos)->get_line() << ":" << tokens.get(new_pos)->get_start_pos() << "\n";
                 throw 1;
             }
         }
@@ -103,10 +105,11 @@ public:
                 return Result(body, new_pos);
             } else {
                 // ERROR!
+                std::cerr << "Expected \"begin\" on " << tokens.get(new_pos)->get_line() << ":" << tokens.get(new_pos)->get_start_pos() << "\n";
                 throw 1;
             }
         } else {
-            // ERROR!
+            std::cerr << "Expected \"begin\" on " << tokens.get(new_pos)->get_line() << ":" << tokens.get(new_pos)->get_start_pos() << "\n";
             throw 1;
         }
 
@@ -120,11 +123,11 @@ public:
                 body.fin = tokens.get(new_pos);
                 new_pos++;
             } else {
-                // ERROR!
+                std::cerr << "Expected \"end\" on " << tokens.get(new_pos)->get_line() << ":" << tokens.get(new_pos)->get_start_pos() << "\n";
                 throw 1;
             }
         } else {
-            // ERROR!
+            std::cerr << "Expected \"end\" on " << tokens.get(new_pos)->get_line() << ":" << tokens.get(new_pos)->get_start_pos() << "\n";
             throw 1;
         }
 
@@ -144,7 +147,7 @@ public:
             decl.sons.back()->is_atom = true;
             new_pos++;
         } else {
-            // ERROR!
+            std::cerr << "Expected function name on " << tokens.get(new_pos)->get_line() << ":" << tokens.get(new_pos)->get_start_pos() << "\n";
             throw 1;
         }
 
@@ -153,11 +156,12 @@ public:
             if (token.get_sep() == "(") {
                 new_pos++;
             } else {
-                // ERROR!
+                std::cerr << "Expected \"(\" on " << tokens.get(new_pos)->get_line() << ":" << tokens.get(new_pos)->get_start_pos() << "\n";
                 throw 1;
             }
         } else {
             // ERROR!
+            std::cerr << "Expected \"(\" on " << tokens.get(new_pos)->get_line() << ":" << tokens.get(new_pos)->get_start_pos() << "\n";
             throw 1;
         }
 
@@ -165,17 +169,12 @@ public:
         decl.sons.push_back(r.node);
         new_pos = r.rest;
 
-        if (tokens.get(new_pos)->get_type() == "Separator") {
-            Separator token = *dynamic_cast<Separator*>(tokens.get(new_pos).get());
-            if (token.get_sep() == ")") {
-                decl.fin = tokens.get(new_pos);
-                new_pos++;
-            } else {
-                // ERROR!
-                throw 1;
-            }
+        if (tokens.get(new_pos)->get_type() == "Separator" &&
+            (*dynamic_cast<Separator*>(tokens.get(new_pos).get())).get_sep() == ")") {
+            decl.fin = tokens.get(new_pos);
+            new_pos++;
         } else {
-            // ERROR!
+            std::cerr << "Expected \")\" on " << tokens.get(new_pos)->get_line() << ":" << tokens.get(new_pos)->get_start_pos() << "\n";
             throw 1;
         }
 
@@ -211,6 +210,7 @@ public:
                     args.sons.back()->is_atom = true;
                     new_pos++;
                 } else {
+                    std::cerr << "Expected argument name on " << tokens.get(new_pos)->get_line() << ":" << tokens.get(new_pos)->get_start_pos() << "\n";
                     throw 1;
                 }
             }
@@ -243,7 +243,8 @@ public:
                 statements.fin = tokens.get(new_pos);
                 new_pos++;
             } else {
-                // ERROR!
+                std::cerr << "Expected \";\" on " << tokens.get(new_pos)->get_line() << ":" << tokens.get(new_pos)->get_start_pos() << "\n";
+
                 throw 1;
             }
         }
@@ -270,7 +271,7 @@ public:
                     (*dynamic_cast<Separator*>(tokens.get(new_pos).get())).get_sep() == "(") {
                     new_pos++;
                 } else {
-                    // ERROR!
+                    std::cerr << "Expected \"(\" on " << tokens.get(new_pos)->get_line() << ":" << tokens.get(new_pos)->get_start_pos() << "\n";
                     throw 1;
                 }
 
@@ -283,7 +284,7 @@ public:
                     statement.fin = tokens.get(new_pos);
                     new_pos++;
                 } else {
-                    // ERROR!
+                    std::cerr << "Expected \")\" on " << tokens.get(new_pos)->get_line() << ":" << tokens.get(new_pos)->get_start_pos() << "\n";
                     throw 1;
                 }
             } else if (word == "read") {
@@ -293,7 +294,7 @@ public:
                     (*dynamic_cast<Separator*>(tokens.get(new_pos).get())).get_sep() == "(") {
                     new_pos++;
                 } else {
-                    // ERROR!
+                    std::cerr << "Expected \"(\" on " << tokens.get(new_pos)->get_line() << ":" << tokens.get(new_pos)->get_start_pos() << "\n";
                     throw 1;
                 }
 
@@ -303,7 +304,7 @@ public:
                     statement.sons.back()->is_atom = true;
                     new_pos++;
                 } else {
-                    // ERROR!
+                    std::cerr << "Expected variable name on " << tokens.get(new_pos)->get_line() << ":" << tokens.get(new_pos)->get_start_pos() << "\n";
                     throw 1;
                 }
 
@@ -312,7 +313,7 @@ public:
                     statement.fin = tokens.get(new_pos);
                     new_pos++;
                 } else {
-                    // ERROR!
+                    std::cerr << "Expected \")\" on " << tokens.get(new_pos)->get_line() << ":" << tokens.get(new_pos)->get_start_pos() << "\n";
                     throw 1;
                 }
             } else if (word == "while") {
@@ -358,15 +359,15 @@ public:
                     } else if (sep.get_sep() == "(") {
                         return parse_call(tokens, new_pos - 1);
                     } else {
-                        // ERROR!
+                        std::cerr << "Expected assignment or function call on " << tokens.get(new_pos)->get_line() << "\n";
                         throw 1;
                     }
                 } else {
-                    // ERROR!
+                    std::cerr << "Expected \":=\" or \"(\" on " << tokens.get(new_pos)->get_line() << ":" << tokens.get(new_pos)->get_start_pos() << "\n";
                     throw 1;
                 }
             } else {
-                // ERROR!
+                std::cerr << "Expected identificator on " << tokens.get(new_pos)->get_line() << ":" << tokens.get(new_pos)->get_start_pos() << "\n";
                 throw 1;
             }
 
@@ -389,7 +390,7 @@ public:
             statement.sons.push_back(std::make_shared<Node>(tokens.get(new_pos - 1), "Name '" + word + "'"));
             statement.sons.back()->is_atom = true;
         } else {
-            // ERROR!
+            std::cerr << "Expected function name on " << tokens.get(new_pos)->get_line() << ":" << tokens.get(new_pos)->get_start_pos() << "\n";
             throw 1;
         }
 
@@ -398,7 +399,7 @@ public:
 
             new_pos++;
         } else {
-            // ERROR!
+            std::cerr << "Expected \"(\" on " << tokens.get(new_pos)->get_line() << ":" << tokens.get(new_pos)->get_start_pos() << "\n";
             throw 1;
         }
 
@@ -432,7 +433,7 @@ public:
             statement.fin = tokens.get(new_pos);
             new_pos++;
         } else {
-            // ERROR!
+            std::cerr << "Expected \")\" on " << tokens.get(new_pos)->get_line() << ":" << tokens.get(new_pos)->get_start_pos() << "\n";
             throw 1;
         }
 
@@ -448,7 +449,7 @@ public:
             (*dynamic_cast<Keyword*>(tokens.get(new_pos).get())).get_word() == "while") {
             new_pos++;
         } else {
-            // ERROR!
+            std::cerr << "Expected \"while\" on " << tokens.get(new_pos)->get_line() << ":" << tokens.get(new_pos)->get_start_pos() << "\n";
             throw 1;
         }
 
@@ -456,7 +457,7 @@ public:
               (*dynamic_cast<Separator*>(tokens.get(new_pos).get())).get_sep() == "(") {
             new_pos++;
         } else {
-            // ERROR!
+            std::cerr << "Expected \"(\" on " << tokens.get(new_pos)->get_line() << ":" << tokens.get(new_pos)->get_start_pos() << "\n";
             throw 1;
         }
 
@@ -472,7 +473,7 @@ public:
             (*dynamic_cast<Separator*>(tokens.get(new_pos).get())).get_sep() == ")") {
             new_pos++;
         } else {
-            // ERROR!
+            std::cerr << "Expected \")\" on " << tokens.get(new_pos)->get_line() << ":" << tokens.get(new_pos)->get_start_pos() << "\n";
             throw 1;
         }
 
@@ -480,7 +481,7 @@ public:
             (*dynamic_cast<Keyword*>(tokens.get(new_pos).get())).get_word() == "do") {
             new_pos++;
         } else {
-            // ERROR!
+            std::cerr << "Expected \"do\" on " << tokens.get(new_pos)->get_line() << ":" << tokens.get(new_pos)->get_start_pos() << "\n";
             throw 1;
         }
 
@@ -506,7 +507,7 @@ public:
             is_reversed = true;
             new_pos++;
         } else {
-            // ERROR!
+            std::cerr << "Expected \"if\" on " << tokens.get(new_pos)->get_line() << ":" << tokens.get(new_pos)->get_start_pos() << "\n";
             throw 1;
         }
 
@@ -514,7 +515,7 @@ public:
             (*dynamic_cast<Separator*>(tokens.get(new_pos).get())).get_sep() == "(") {
             new_pos++;
         } else {
-            // ERROR!
+            std::cerr << "Expected \"(\" on " << tokens.get(new_pos)->get_line() << ":" << tokens.get(new_pos)->get_start_pos() << "\n";
             throw 1;
         }
 
@@ -530,7 +531,7 @@ public:
             (*dynamic_cast<Separator*>(tokens.get(new_pos).get())).get_sep() == ")") {
             new_pos++;
         } else {
-            // ERROR!
+            std::cerr << "Expected \")\" on " << tokens.get(new_pos)->get_line() << ":" << tokens.get(new_pos)->get_start_pos() << "\n";
             throw 1;
         }
 
@@ -538,7 +539,7 @@ public:
             (*dynamic_cast<Keyword*>(tokens.get(new_pos).get())).get_word() == "then") {
             new_pos++;
         } else {
-            // ERROR!
+            std::cerr << "Expected \"then\" on " << tokens.get(new_pos)->get_line() << ":" << tokens.get(new_pos)->get_start_pos() << "\n";
             throw 1;
         }
 
@@ -551,7 +552,7 @@ public:
             (*dynamic_cast<Keyword*>(tokens.get(new_pos).get())).get_word() == "else") {
             new_pos++;
         } else {
-            // ERROR!
+            std::cerr << "Expected \"else\" on " << tokens.get(new_pos)->get_line() << ":" << tokens.get(new_pos)->get_start_pos() << "\n";
             throw 1;
         }
 
@@ -748,7 +749,7 @@ public:
             (*dynamic_cast<Separator*>(tokens.get(new_pos).get())).get_sep() == ")") {
             new_pos++;
         } else {
-            // ERROR!
+            std::cerr << "Expected \")\" on " << tokens.get(new_pos)->get_line() << ":" << tokens.get(new_pos)->get_start_pos() << "\n";
             throw 1;
         }
 
@@ -799,7 +800,7 @@ public:
 
     static Result parse_ident(TokenStream& tokens, int pos) {
         if (tokens.get(pos)->get_type() != "Ident") {
-            // ERROR!
+            std::cerr << "Unexpected symbol on " << tokens.get(pos)->get_line() << ":" << tokens.get(pos)->get_start_pos() << "\n";
             throw 1;
         }
 
