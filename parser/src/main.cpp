@@ -218,7 +218,8 @@ void test_all() {
 
 void print(Node *n, std::string filename) {
     std::ofstream os;
-    os.open("../" + filename + ".gv");
+    std::string base_filename = filename.substr(filename.find_last_of("/\\") + 1);
+    os.open(base_filename + ".gv");
 
     os << "digraph program {" << "\n";
         n->print(os, 0);
