@@ -179,7 +179,7 @@ public:
                                                                    lexeme(lexeme) {}
 
     virtual std::string get_type() {
-        return "Separator";
+        return "Unknown";
     }
 
     std::string get_lexeme() {
